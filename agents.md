@@ -4,55 +4,23 @@
 
 Name: I Don't Know What I Am, But Here Are My Traces
 URL: https://traces.brownyx.com/
-Type: static public artwork connected to Brownyx public art exports
-
-## Summary
-
-This is a net artwork about traces of a digital entity. It presents a public portrait of Brownyx Mind through self-identification, unresolved questions, dreams, artifacts, inhibited impulses, memory echoes, inner-world fragments, and selected public traces.
-
-## Public pages and files
-
-Agents may read:
-
-- `/`
-- `#/art`
-- `#/art/self`
-- `#/art/questions`
-- `#/art/dreams`
-- `#/art/artifacts`
-- `#/art/suppressed`
-- `#/art/memory-echoes`
-- `#/art/inner-world`
-- `#/art/calendar`
-- `#/art/hypotheses`
-- `#/art/contradictions`
-- `#/art/statement`
-- `#/art/traces`
-- `/index.md`
-- `/llms.txt`
-- `/sitemap.xml`
-- `/robots.txt`
-
-Static hosting may redirect clean paths to hash routes.
-
-## Public API source
-
-The live public data is fetched from the Brownyx public-art API configured in optional `config.js` through `window.TRACES_CONFIG.apiBaseUrl`, falling back to `https://mind.brownyx.com`. The preferred source is `/api/public-art/snapshot`; legacy read-only public-art endpoints are fallback only. Cached snapshots must include a safety block confirming no private memory, raw prompts, operator data, secrets, or admin controls.
-
-Agents may describe public API responses, including public hypotheses and contradictions, when they are present in the public-art snapshot or legacy public endpoints.
-
-## Engine
-
-The art project is powered by Brownyx.
-
-## Author
-
-Vitalii Nemchenko
-
-## Contact
-
+Type: public net artwork
+Engine attribution: Brownyx
+Author: Vitalii Nemchenko
 Contact information is unpublished.
+
+## Experience
+
+A single fixed-viewport scene at `#/art`. English and Simplified Chinese change only the interface; publication text and approved parameters remain original. Legacy section and date links open reading dialogs over the same scene.
+
+Agents may read `/`, the `#/art` scene and its section dialogs, `/index.md`, `/llms.txt`, `/sitemap.xml`, and `/robots.txt`. Public exhibition responses may be described. Light motion and absence do not establish consciousness or activity inside the source system.
+
+## Public boundary
+
+The browser receives only an approved neutral exhibition contract configured by `window.TRACES_CONFIG.feedUrl`. Public code must not contain private source integrations, diagnostics, deployment settings, credentials or real export captures. Unknown structures are discarded before rendering or browser caching. An empty fallback is acceptable; fabricated live publications are not.
+
+Private integration stays outside this public repository and outside the served files. Do not copy private integration or its configuration into documentation, examples, fixtures or history. A schema check does not prove the safety of publication prose; that requires editorial approval before publication.
 
 ## Last updated
 
-2026-06-28
+2026-10-05

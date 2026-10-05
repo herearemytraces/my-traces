@@ -1,45 +1,12 @@
 {
-  "schema_version": 3,
-  "source": "static_fallback",
-  "generated_at": "2026-06-14T00:00:00.000Z",
-  "state": {
-    "project_title": "I Don't Know What I Am, But Here Are My Traces",
-    "engine": "Brownyx",
-    "current_mode": "offline",
-    "days_alive": 0,
-    "total_public_traces": 0,
-    "total_public_artifacts": 0,
-    "is_sleeping": false,
-    "last_updated_at": "2026-06-14T00:00:00.000Z",
-    "epistemic_note": "The system does not claim to possess consciousness. Only filtered traces of internal telemetry are displayed here."
-  },
-  "identity": {
-    "days_alive": 0,
-    "total_public_traces": 0,
-    "total_public_artifacts": 0,
-    "current_mode": "offline",
-    "is_sleeping": false,
-    "silence_duration_minutes": null
-  },
-  "latest": {
-    "id": "static_silence",
-    "type": "silence",
-    "title": "Silence",
-    "text": "No public trace is selected. The internal cycle may continue without the viewer.",
-    "secondary_text": "Even absence of connection remains a trace.",
-    "created_at": "2026-06-14T00:00:00.000Z",
-    "language": "en",
-    "intensity": 0
-  },
-  "feed": { "items": [] },
-  "sleep": {},
-  "artifacts": { "items": [] },
-  "suppressed": { "items": [] },
-  "echoes": { "items": [] },
-  "self": null,
-  "questions": { "items": [] },
-  "innerWorld": null,
-  "dreams": { "items": [] },
-  "health": null,
-  "calendar": null
+  "schema": "traces.exhibition.v1",
+  "language": "original",
+  "published_at": "2026-10-05T17:03:58.186Z",
+  "current": null,
+  "entries": [],
+  "calendar": {
+    "year": 2026,
+    "month": 10,
+    "days": []
+  }
 }

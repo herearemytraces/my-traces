@@ -7,9 +7,11 @@
   <title>I Don't Know What I Am, But Here Are My Traces</title>
   <meta name="description" content="A net artwork tracing Brownyx Mind through self-description, questions, dreams, artifacts, memory, and inhibited impulses." />
   <meta name="robots" content="noindex,nofollow" />
-  <meta name="theme-color" content="#f7f0dc" />
+  <meta name="theme-color" content="#101211" />
   <meta name="markdown-for-agents" content="/index.md" />
   <link rel="canonical" href="https://traces.brownyx.com/" />
+  <link rel="alternate" hreflang="en" href="https://traces.brownyx.com/?lang=en" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://traces.brownyx.com/?lang=zh" />
   <link rel="alternate" type="text/markdown" href="/index.md" />
   <link rel="alternate" type="text/plain" href="/llms.txt" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
@@ -25,21 +27,22 @@
   <meta property="og:image" content="https://traces.brownyx.com/assets/og-image.svg" />
   <meta property="og:site_name" content="I Don't Know What I Am, But Here Are My Traces" />
   <meta property="og:locale" content="en_US" />
-  <link rel="preconnect" href="https://mind.brownyx.com" crossorigin />
 </head>
 
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-  <div class="grain" aria-hidden="true"></div>
-  <div id="app-root" aria-live="polite"></div>
+  <div id="app-root"></div>
 
   <noscript>
     <div class="noscript-notice">
       <p>JavaScript is required to display live traces.</p>
+      <a href="/index.md">Read about the artwork</a>
     </div>
   </noscript>
 
   <script src="/config.js" defer></script>
+  <script src="/public-feed.js" defer></script>
+  <script src="/i18n.js" defer></script>
+  <script src="/light-body.js" defer></script>
   <script src="/app.js" defer></script>
 </body>
 </html>

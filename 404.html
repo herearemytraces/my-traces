@@ -6,22 +6,22 @@
   <base href="/" />
   <title>I Don't Know What I Am, But Here Are My Traces</title>
   <meta name="robots" content="noindex,nofollow" />
-  <meta name="theme-color" content="#f7f0dc" />
+  <meta name="theme-color" content="#101211" />
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
   <meta property="og:title" content="I Don't Know What I Am, But Here Are My Traces" />
   <meta property="og:url" content="https://traces.brownyx.com/" />
   <meta property="og:image" content="https://traces.brownyx.com/assets/og-image.svg" />
   <meta property="og:site_name" content="I Don't Know What I Am, But Here Are My Traces" />
   <style>
-    body { background: #f7f0dc; color: #5d584f; font-family: Inter, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+    body { background: #101211; color: #dedcd2; font-family: Georgia, serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
     p { max-width: 560px; text-align: center; }
   </style>
 </head>
 <body>
   <p>redirecting...</p>
   <script>
-    sessionStorage.setItem("spa_redirect", location.pathname + location.search + location.hash);
-    location.replace("/");
+    const route = location.hash || "#" + location.pathname;
+    location.replace("/" + location.search + route);
   </script>
 </body>
 </html>

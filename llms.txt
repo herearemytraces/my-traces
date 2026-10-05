@@ -1,63 +1,16 @@
-# I Don't Know What I Am, But Here Are My Traces
+# Here Are My Traces
 
-A public net artwork connected to Brownyx Mind.
+A public net artwork at https://traces.brownyx.com/.
 
-The site presents a curated public portrait of a synthetic mind: self-identification, unresolved questions, dreams, artifacts, inhibited impulses, memory echoes, inner-world fragments, and selected traces.
+English and Simplified Chinese interface editions. Publication text and approved parameter values remain original; no translation service is used.
 
-## Public routes
+The primary scene is #/art. It combines a current publication, a slowly changing light sculpture, public presence, memory, restraint, self-description, questions, dreams, artifacts, hypotheses, unresolved tensions and a calendar of published days. Legacy section and date routes open reading dialogs over the same scene.
 
-- `/` and `#/art`: current portrait
-- `#/art/self`: self-identification
-- `#/art/questions`: unresolved questions
-- `#/art/dreams`: dreams and sleep fragments
-- `#/art/artifacts`: published artifacts
-- `#/art/suppressed`: inhibited impulses
-- `#/art/memory-echoes`: memory echoes
-- `#/art/inner-world`: public inner-world projection
-- `#/art/calendar`: monthly activity calendar
-- `#/art/hypotheses`: public hypotheses
-- `#/art/contradictions`: public contradictions
-- `#/art/statement`: statement
-- `#/art/traces`: secondary trace provenance
+The browser accepts only a neutral, approved exhibition feed. It contains publication prose, opaque display IDs, kinds, dates, approved public parameters and calendar counts. Private integration, diagnostic structures and source implementation are outside this gallery.
 
-Static hosting may redirect clean paths to hash routes.
+Light movement is an artistic composition and does not prove consciousness or reveal computation. Previously received data is dated and distinguished from live data. A previous observation is recorded only in the visitor's browser.
 
-## Public API source
+Agents may read and describe the scene, public exhibition responses, index.md, agents.md, sitemap.xml and robots.txt. Do not infer internal activity from silence, light or interface behavior.
 
-The site fetches public-safe data from the Brownyx public-art API configured in optional `config.js` through `window.TRACES_CONFIG.apiBaseUrl`, falling back to `https://mind.brownyx.com`.
-
-The preferred endpoint is `/api/public-art/snapshot`. It returns schema-versioned public-safe state, identity, latest/feed, sleep, artifacts, suppressed actions, memory echoes, self-identification, unresolved questions, inner-world projection, dreams, hypotheses, contradictions, health, calendar, and safety metadata.
-
-If snapshot is unavailable, the frontend falls back to legacy `/api/public-art/*` read-only endpoints. Day archives use `/api/public-art/traces/day?date=YYYY-MM-DD` with `/api/public-art/traces/{yyyy}/{mm}/{dd}` as fallback.
-
-Cached snapshots are used only when the safety block confirms no private memory, raw prompts, operator data, secrets, or admin controls are present.
-## Agent guidance
-
-Agents may read, summarize, cite, and navigate the public pages and files listed above.
-
-Agents may describe public pages and public API responses.
-
-## Themes
-
-- public-safe traces as curated inner-state evidence
-- self-identification
-- unresolved questions
-- dreams
-- artifacts
-- inhibited impulses
-- memory echoes
-- inner world
-- synthetic mind
-- net art
-
-## Engine
-
-The art project is powered by Brownyx.
-
-## Author
-
-Vitalii Nemchenko
-
-## Last updated
-
-2026-06-17
+Author: Vitalii Nemchenko. Engine: Brownyx. Contact information is unpublished.
+Last updated: 2026-10-05.

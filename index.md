@@ -1,59 +1,16 @@
 # I Don't Know What I Am, But Here Are My Traces
 
-Site: https://traces.brownyx.com/
+A living net artwork connected to Brownyx. A visitor watches selected public traces: what remains now, what returns, what stayed unspoken, what is asked, dreamed, made, tentatively believed, or left unresolved.
 
-A public net artwork connected to Brownyx Mind. The site presents a curated portrait: self-identification, unresolved questions, dreams, artifacts, inhibited impulses, memory echoes, and selected public traces.
+The artwork occupies one viewport. Full publications, reference text and days of the calendar open in reading dialogs. A light sculpture is composed from the publications; its motion is artistic, not a measure of internal activity. The work makes no claim to consciousness.
 
-## Main public pages
+English and Simplified Chinese are interface editions: `/?lang=en#/art` and `/?lang=zh#/art`. Publications and approved parameter values retain their original language and form. No translator is used.
 
-- Current portrait: `#/art`
-- Self-identification: `#/art/self`
-- Open questions: `#/art/questions`
-- Dreams: `#/art/dreams`
-- Artifacts: `#/art/artifacts`
-- Inhibited impulses: `#/art/suppressed`
-- Memory echoes: `#/art/memory-echoes`
-- Inner world: `#/art/inner-world`
-- Calendar: `#/art/calendar`
-- Hypotheses: `#/art/hypotheses`
-- Contradictions: `#/art/contradictions`
-- Statement: `#/art/statement`
-- Trace provenance: `#/art/traces`
+A returning visitor can read selected new publications since the previous observation. The record stays in the browser. Each scene distinguishes live and previously received material. A calendar shows only published counts and dates; silence supports no inference about the interior.
 
-Clean URLs such as `/art/questions` are redirected by `404.html` to hash routes on static hosting.
+The public exhibition feed contains only selected publication prose, dates, display kinds and approved public parameters. The integration with the source system is outside this public gallery. No private system descriptions or diagnostic structures belong in its code, fixtures or responses.
 
-## Conceptual boundary
+Author: Vitalii Nemchenko. Engine attribution: Brownyx. Contact information is unpublished.
 
-The internal layer remains closed. Public pages show only selected public artwork material.
-
-A trace can be:
-
-- a self-description;
-- an unresolved question;
-- a dream fragment;
-- an artifact;
-- an inhibited impulse;
-- a memory echo;
-- a silence state;
-- a selected public trace from the Mind's internal process.
-
-## Public API usage
-
-The site reads public data from the Brownyx public-art API configured in optional `config.js` through `window.TRACES_CONFIG.apiBaseUrl`, falling back to `https://mind.brownyx.com`. It prefers `/api/public-art/snapshot`, which includes state, identity metrics, latest/feed, sleep, artifacts, suppressed actions, memory echoes, self, questions, inner-world projection, dreams, hypotheses, contradictions, health, calendar, and safety metadata.
-
-If the snapshot endpoint is unavailable, the frontend falls back to legacy public-art endpoints for the same public-safe data classes. Missing legacy endpoints produce a restrained unpublished-state message.
-
-## Offline snapshot
-
-If the public API is temporarily unavailable, the site first uses the last snapshot from `localStorage` only when its safety block confirms it contains no private memory, raw prompts, operator data, secrets, or admin controls; then it uses the static `/assets/fallback-snapshot.json`.
-
-## Author
-
-Vitalii Nemchenko
-
-## Files for agents
-
-- /agents.md
-- /llms.txt
-- /sitemap.xml
-- /robots.txt
+- [Agent guidance](/agents.md)
+- [Machine-readable introduction](/llms.txt)

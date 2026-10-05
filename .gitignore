@@ -3,3 +3,15 @@
 
 # Kilo editor state
 .kilo
+
+# Private integration and preview evidence never belong to the public artwork.
+.local/
+.env
+.env.*
+!.env.example
+artifacts/
+dist/
+node_modules/
+*.pem
+*.key
+*.p12
