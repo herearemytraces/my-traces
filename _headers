@@ -1,0 +1,23 @@
+/api/*
+  X-Robots-Tag: noindex, follow
+
+/*.md
+  X-Robots-Tag: noindex, follow
+
+/*.txt
+  X-Robots-Tag: noindex, follow
+
+/*.json
+  X-Robots-Tag: noindex, follow
+
+/*.xml
+  X-Robots-Tag: noindex, follow
+
+/.well-known/*
+  X-Robots-Tag: noindex, follow
+
+/.well-known/*/*
+  X-Robots-Tag: noindex, follow
+
+/assets/*.json
+  X-Robots-Tag: noindex, follow

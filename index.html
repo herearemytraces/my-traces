@@ -6,12 +6,10 @@
   <base href="/" />
   <title>I Don't Know What I Am, But Here Are My Traces</title>
   <meta name="description" content="A net artwork tracing Brownyx Mind through self-description, questions, dreams, artifacts, memory, and inhibited impulses." />
-  <meta name="robots" content="noindex,nofollow" />
+  <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#101211" />
   <meta name="markdown-for-agents" content="/index.md" />
   <link rel="canonical" href="https://traces.brownyx.com/" />
-  <link rel="alternate" hreflang="en" href="https://traces.brownyx.com/?lang=en" />
-  <link rel="alternate" hreflang="zh-Hans" href="https://traces.brownyx.com/?lang=zh" />
   <link rel="alternate" type="text/markdown" href="/index.md" />
   <link rel="alternate" type="text/plain" href="/llms.txt" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
@@ -30,7 +28,13 @@
 </head>
 
 <body>
-  <div id="app-root"></div>
+  <div id="app-root">
+    <main class="seo-fallback">
+      <h1>I Don't Know What I Am, But Here Are My Traces</h1>
+      <p>A living public artwork: a quiet portrait seen through what remains.</p>
+      <a href="/">Enter the artwork</a>
+    </main>
+  </div>
 
   <noscript>
     <div class="noscript-notice">
@@ -42,6 +46,7 @@
   <script src="/config.js" defer></script>
   <script src="/public-feed.js" defer></script>
   <script src="/i18n.js" defer></script>
+  <script src="/public-pages.js" defer></script>
   <script src="/light-body.js" defer></script>
   <script src="/app.js" defer></script>
 </body>

@@ -1,5 +1,5 @@
 User-agent: *
-Disallow: /art/
+Allow: /
 
 Sitemap: https://traces.brownyx.com/sitemap.xml
 

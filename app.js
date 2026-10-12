@@ -19,6 +19,28 @@ try { baseline = JSON.parse(read('traces.observation.v2')); } catch {}
 let sculpture, quiet = false, timer, refreshing = false, reader = null, readerVersion = 0, opener, fitFrame = 0, selectedDay = null;
 const kinds = ['self','question','dream','artifact','hypothesis','contradiction'];
 const routeKinds = {self:'self',questions:'question',dreams:'dream',sleep:'dream',artifacts:'artifact',suppressed:'restraint','memory-echoes':'memory','inner-world':'world',hypotheses:'hypothesis',contradictions:'contradiction',calendar:'calendar',traces:'archive',statement:'about',portrait:'about',presence:'presence',live:'current'};
+function publicPath(kind) { return window.TracesPublicPages?.find(page=>page.reader===kind)?.path || null; }
+function syncPublicMetadata(kind) {
+ const pages=window.TracesPublicPages || [];
+ const pathname=location.pathname.replace(/\/+$/,'') || '/';
+ const page=(kind?pages.find(item=>item.reader===kind):null) || pages.find(item=>item.path===pathname) || pages[0];
+ if(!page)return;
+ const siteOrigin=new URL(document.querySelector('link[rel="canonical"]')?.href || location.origin).origin;
+ document.title=page.title;
+ document.querySelector('meta[name="description"]')?.setAttribute('content',page.description);
+ document.querySelector('meta[property="og:title"]')?.setAttribute('content',page.title);
+ document.querySelector('meta[property="og:description"]')?.setAttribute('content',page.description);
+ document.querySelector('meta[property="og:url"]')?.setAttribute('content',new URL(page.path,siteOrigin).href);
+ document.querySelector('link[rel="canonical"]')?.setAttribute('href',new URL(page.path,siteOrigin).href);
+}
+function convertPermalinkControls() {
+ for(const button of root.querySelectorAll('button[data-read]')) {
+  const href=publicPath(button.dataset.read);if(!href)continue;
+  const link=document.createElement('a');link.href=href;link.dataset.read=button.dataset.read;link.className=button.className;link.innerHTML=button.innerHTML;
+  for(const name of ['aria-label','title'])if(button.hasAttribute(name))link.setAttribute(name,button.getAttribute(name));
+  button.replaceWith(link);
+ }
+}
 function empty(key) { const value=t('empty'+key[0].toUpperCase()+key.slice(1));return value.startsWith('empty')?t('emptyGeneric'):value; }
 function entries(kind) { return (observation.feed?.entries || []).filter(entry => !kind || entry.kind === kind).sort((a,b)=>Date.parse(b.published_at)-Date.parse(a.published_at)); }
 function time(value, short = false) {
@@ -35,7 +57,9 @@ function changed(key, html) {
  if (target && target.artMarkup!==html) {target.artMarkup=html;target.innerHTML=html;target.classList.remove('arrived');void target.offsetWidth;target.classList.add('arrived');}
 }
 function heading(index,key) {
- return `<div class="zone-heading"><h2><span>${index}</span>${escape(t(key))}</h2><button data-read="${key}" aria-label="${escape(t('open')+': '+t(key))}">↗</button></div>`;
+ const href=publicPath(key);
+ const action=href?`<a data-read="${key}" href="${href}" aria-label="${escape(t('open')+': '+t(key))}">↗</a>`:`<button data-read="${key}" aria-label="${escape(t('open')+': '+t(key))}">↗</button>`;
+ return `<div class="zone-heading"><h2><span>${index}</span>${escape(t(key))}</h2>${action}</div>`;
 }
 function fragment(entry,key,dominant=false) {
  if(!entry)return `<p class="absence clamp">${escape(empty(key))}</p>`;
@@ -100,13 +124,10 @@ function fit() {
  });
 }
 function mount() {
- sculpture?.destroy();document.documentElement.lang=language==='zh'?'zh-Hans':'en';document.title=t('title').replace(/\n/g,' ');
- document.querySelector('meta[name="description"]')?.setAttribute('content',t('description'));
- document.querySelector('meta[property="og:title"]')?.setAttribute('content',document.title);
- document.querySelector('meta[property="og:description"]')?.setAttribute('content',t('description'));
+ sculpture?.destroy();document.documentElement.lang=language==='zh'?'zh-Hans':'en';syncPublicMetadata(reader);
  document.querySelector('meta[property="og:locale"]')?.setAttribute('content',language==='zh'?'zh_CN':'en_US');
- root.innerHTML=shell();sculpture=TracesLight.create(root.querySelector('canvas'));sculpture.setPaused?.(quiet);
- root.querySelector('dialog').addEventListener('close',()=>{readerVersion++;reader=null;root.classList.remove('reading');if(location.hash!=='#/art')history.replaceState(null,'',`${location.pathname}${location.search}#/art`);if(opener?.isConnected)opener.focus();});render();
+ root.innerHTML=shell();convertPermalinkControls();sculpture=TracesLight.create(root.querySelector('canvas'));sculpture.setPaused?.(quiet);
+ root.querySelector('dialog').addEventListener('close',()=>{readerVersion++;reader=null;root.classList.remove('reading');if(location.hash)history.replaceState(null,'',`${location.pathname}${location.search}`);syncPublicMetadata(null);if(opener?.isConnected)opener.focus();});render();
 }
 function article(entry) {
  return `<article><p class="trace-meta">${escape(t(entry.kind))} <time>${escape(time(entry.published_at))}</time>${fresh(entry)?`<b>${escape(t('newMark'))}</b>`:''}</p>${entry.title?`<h3>${escape(entry.title)}</h3>`:''}<p class="reading-text">${lines(entry.text)}</p>${entry.note?`<p class="secondary">${lines(entry.note)}</p>`:''}</article>`;
@@ -116,7 +137,7 @@ function showReader(kind,custom) {
  let title=t(kind),content;
  if(custom){title=custom.title;content=custom.content;}
  else if(kind==='about'){title=t('aboutTitle');content=['aboutP1','aboutP2','aboutP3','aboutP4','aboutP5','aboutP6'].map(key=>`<p>${escape(t(key))}</p>`).join('');}
- else if(kind==='calendar'){content=`<p class="secondary">${escape(t('calendarNote'))}</p><div class="calendar-full">${calendarMarkup(observation.feed?.calendar)}</div><button class="archive-link" data-read="archive">${escape(t('archive'))} ↗</button>`;}
+ else if(kind==='calendar'){content=`<p class="secondary">${escape(t('calendarNote'))}</p><div class="calendar-full">${calendarMarkup(observation.feed?.calendar)}</div><a class="archive-link" data-read="archive" href="${publicPath('archive')}">${escape(t('archive'))} ↗</a>`;}
  else if(kind==='presence'){content=`<div class="presence-reader">${parameterMarkup()}</div><p class="secondary">${escape(t('originalNote'))}</p>`;}
  else {const selected=kind==='current'?observation.feed?.current?[observation.feed.current]:[]:kind==='new'?entries().filter(fresh):entries(kind==='archive'||kind==='stream'?null:kind);content=selected.map(article).join('')||`<p class="empty-reader">${escape(empty(kind))}</p>`;}
  dialog.querySelector('.reader-content').innerHTML=`<p class="eyebrow">MY TRACES / ${escape(t('reading'))}</p><h2 id="reader-title" tabindex="-1">${lines(title)}</h2>${custom?.provenance || provenance()}${content}`;
@@ -129,9 +150,11 @@ async function showDay(date) {
  catch {if(version===readerVersion && reader==='day')showReader('day',{title:date,content:`<p>${escape(t('dayUnavailable'))}</p>`});}
 }
 function route() {
- const segments=location.hash.replace(/^#\/?/,'').split('?')[0].split('/').filter(Boolean);
+ const routeText=location.hash.startsWith('#/')?location.hash.slice(2):location.pathname.replace(/^\/+/, '');
+ const segments=routeText.split('?')[0].split('/').filter(Boolean);
  if(segments[0]==='art' && segments[1]==='traces' && segments.length===5){const date=segments.slice(2).join('-');if(/^\d{4}-\d{2}-\d{2}$/.test(date)){showDay(date);return;}}
  const kind=segments[0]==='art'?routeKinds[segments[1]]:null;
+ syncPublicMetadata(kind);
  if(kind){readerVersion++;showReader(kind);}else root.querySelector('dialog')?.close();
 }
 function schedule() {clearTimeout(timer);if(!document.hidden)timer=setTimeout(refresh,30000);}
@@ -140,6 +163,10 @@ async function refresh() {
  try {observation=await feedStore.refresh();render();}finally{refreshing=false;schedule();}
 }
 root.addEventListener('click',event=>{
+ const link=event.target.closest('a[data-read]');
+ if(link && event.button===0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey){
+  event.preventDefault();const destination=new URL(link.href,location.origin);history.pushState(null,'',`${destination.pathname}${location.search}`);route();return;
+ }
  const target=event.target.closest('button');
  const zone=event.target.closest('.zone');
  if(!target && zone && window.getSelection()?.type!=='Range'){readerVersion++;showReader(zone.dataset.zone);return;}
@@ -154,8 +181,7 @@ root.addEventListener('change',event=>{
  if(!event.target.matches('select'))return;const opened=reader;readerVersion++;language=event.target.value==='zh'?'zh':'en';const url=new URL(location.href);url.searchParams.set('lang',language);history.replaceState(null,'',url);mount();if(opened==='day' && selectedDay)showDay(selectedDay);else if(opened)showReader(opened);else root.querySelector('select').focus();
 });
 document.addEventListener('visibilitychange',()=>{if(document.hidden)clearTimeout(timer);else refresh();});
-window.addEventListener('resize',fit);window.addEventListener('online',refresh);window.addEventListener('hashchange',route);
-if(!location.hash){const path=location.pathname.startsWith('/art')?location.pathname:'/art';history.replaceState(null,'',`/${location.search}#${path}`);}
+window.addEventListener('resize',fit);window.addEventListener('online',refresh);window.addEventListener('hashchange',route);window.addEventListener('popstate',route);
 mount();route();
 async function start(){
  if(!observation.feed){try{const feed=await TracesFeed.request('/assets/fallback-snapshot.json',{timeoutMs:8000});observation={feed,status:'cached',received_at:null,published_at:feed.published_at};render();}catch{}}

@@ -4,14 +4,16 @@ import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { isDeepStrictEqual } from 'node:util';
 import { pathToFileURL } from 'node:url';
+import PublicPages from '../public-pages.js';
+import { renderPublicPage } from './generate-public-pages.mjs';
 
 const Feed = createRequire(import.meta.url)('../public-feed.js');
 const root = resolve(import.meta.dirname, '..');
 
 export const PUBLIC_FILES = Object.freeze([
   'index.html', '404.html', 'app.js', 'style.css', 'config.js',
-  'public-feed.js', 'i18n.js', 'light-body.js', 'index.md', 'agents.md',
-  'robots.txt', 'sitemap.xml', 'llms.txt', 'assets/favicon.svg',
+  'public-feed.js', 'i18n.js', 'public-pages.js', 'light-body.js', 'index.md', 'agents.md',
+  'robots.txt', 'sitemap.xml', 'llms.txt', '_headers', 'assets/favicon.svg',
   'assets/og-image.svg', 'assets/fallback-snapshot.json',
 ]);
 const sourceExtensions = new Set(['.js', '.mjs', '.cjs', '.css', '.html', '.json', '.svg', '.md', '.txt', '.xml', '.yml', '.yaml', '.toml', '.env']);
@@ -135,14 +137,18 @@ async function publicBuild(findings) {
   let names;
   try { names = await listBuild(resolve(root, 'dist'), findings); }
   catch { report(findings, 'dist', 1, 'build-missing-or-unreadable'); return 0; }
-  const allowed = new Set(PUBLIC_FILES);
+  const routePages = new Map(PublicPages.map(page => [page.path === '/' ? 'index.html' : `${page.path.slice(1)}/index.html`, page]));
+  routePages.set('art/index.html', PublicPages[0]);
+  const allowed = new Set([...PUBLIC_FILES, ...routePages.keys()]);
   for (const file of names) if (!allowed.has(file)) report(findings, 'dist/' + file, 1, 'unexpected-build-file');
   for (const file of allowed) if (!names.includes(file)) report(findings, 'dist/' + file, 1, 'missing-build-file');
   for (const file of names) {
     if (!allowed.has(file)) continue;
     try {
       const contents = await readFile(resolve(root, 'dist', file));
-      const source = await readFile(resolve(root, file));
+      const source = routePages.has(file)
+        ? Buffer.from(renderPublicPage(await readFile(resolve(root, 'index.html'), 'utf8'), routePages.get(file)))
+        : await readFile(resolve(root, file));
       if (!contents.equals(source)) report(findings, 'dist/' + file, 1, 'build-source-mismatch');
       scanText(contents.toString('utf8'), 'dist/' + file, findings);
       if (file === 'assets/fallback-snapshot.json') inspectStaticPublication(contents.toString('utf8'), 'dist/' + file, findings);

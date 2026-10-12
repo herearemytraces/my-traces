@@ -1,10 +1,12 @@
 import {mkdir,copyFile,readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {createRequire} from 'node:module';
+import {generatePublicPages} from './generate-public-pages.mjs';
 const Feed=createRequire(import.meta.url)('../public-feed.js');
 const root=resolve(import.meta.dirname,'..');
-const files=['index.html','404.html','app.js','style.css','config.js','public-feed.js','i18n.js','light-body.js','index.md','agents.md','robots.txt','sitemap.xml','llms.txt','assets/favicon.svg','assets/og-image.svg','assets/fallback-snapshot.json'];
+const files=['index.html','404.html','app.js','style.css','config.js','public-feed.js','i18n.js','public-pages.js','light-body.js','index.md','agents.md','robots.txt','sitemap.xml','llms.txt','_headers','assets/favicon.svg','assets/og-image.svg','assets/fallback-snapshot.json'];
 Feed.project(JSON.parse(await readFile(resolve(root,'assets/fallback-snapshot.json'),'utf8')));
 await mkdir(resolve(root,'dist/assets'),{recursive:true});
 for(const name of files)await copyFile(resolve(root,name),resolve(root,'dist',name));
-console.log(`Public exhibition packaged: ${files.length} files`);
+const pages=await generatePublicPages(resolve(root,'dist'));
+console.log(`Public exhibition packaged: ${files.length} files and ${pages.length} canonical pages`);

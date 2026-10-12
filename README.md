@@ -17,7 +17,7 @@ node scripts/check-public.mjs
 
 Open `http://127.0.0.1:4178/?lang=en#/art` or `?lang=zh#/art`. The preview serves an explicit public-file allowlist and returns an unavailable response until an approved exhibition feed is configured. It never serves the repository, ignored files or environment settings.
 
-`dist/` is the static gallery package. The existing public domain and indexing policy are preserved. The package can be served by any static host; live data requires a same-origin `/api/exhibition` or a separately configured, already approved exhibition feed with CORS. This repository does not contain the integration with the source system.
+`dist/` is the static gallery package. The homepage and stable public sections have separate canonical URLs; `?lang=` changes only the interface and is not a second canonical page. Technical and machine-readable files remain available to their consumers and carry `X-Robots-Tag: noindex`. The package can be served by any static host that honors `_headers`; live data requires a same-origin `/api/exhibition` or a separately configured, already approved exhibition feed with CORS. This repository does not contain the integration with the source system.
 
 ## Exhibition contract
 
