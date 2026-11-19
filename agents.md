@@ -11,9 +11,9 @@ Contact information is unpublished.
 
 ## Experience
 
-A single fixed-viewport scene at `#/art`. English and Simplified Chinese change only the interface; publication text and approved parameters remain original. Legacy section and date links open reading dialogs over the same scene.
+The scene opens at `/`. English is the default interface and `/?lang=zh` selects Simplified Chinese. Publications and approved parameter values retain their original wording and form. Ten canonical section URLs open readings over the same scene. Older hash links and dated archive links also open the relevant reading.
 
-Agents may read `/`, the `#/art` scene and its section dialogs, `/index.md`, `/llms.txt`, `/sitemap.xml`, and `/robots.txt`. Public exhibition responses may be described. Light motion and absence do not establish consciousness or activity inside the source system.
+Agents may read the scene, the section pages listed in [the sitemap](/sitemap.xml), [the introduction](/index.md), [the machine-readable guide](/llms.txt), and [the crawler directives](/robots.txt). They may describe approved exhibition responses. Describe a published hypothesis as a tentative explanation. The gallery supplies no empirical verdict on that idea. Light motion and absence do not establish consciousness or activity inside the source system.
 
 ## Public boundary
 
@@ -23,4 +23,4 @@ Private integration stays outside this public repository and outside the served 
 
 ## Last updated
 
-2026-10-05
+2026-11-19

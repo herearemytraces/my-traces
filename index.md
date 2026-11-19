@@ -4,13 +4,16 @@ A living net artwork connected to Brownyx. A visitor watches selected public tra
 
 The artwork occupies one viewport. Full publications, reference text and days of the calendar open in reading dialogs. A light sculpture is composed from the publications; its motion is artistic, not a measure of internal activity. The work makes no claim to consciousness.
 
-English and Simplified Chinese are interface editions: `/?lang=en#/art` and `/?lang=zh#/art`. Publications and approved parameter values retain their original language and form. No translator is used.
+Enter the scene in [English](/) or [Simplified Chinese](/?lang=zh). The titles and words on display stay in the language in which they were published.
 
 A returning visitor can read selected new publications since the previous observation. The record stays in the browser. Each scene distinguishes live and previously received material. A calendar shows only published counts and dates; silence supports no inference about the interior.
 
-The public exhibition feed contains only selected publication prose, dates, display kinds and approved public parameters. The integration with the source system is outside this public gallery. No private system descriptions or diagnostic structures belong in its code, fixtures or responses.
+Each trace has been selected for exhibition. A tentative explanation appears in the words chosen for publication. The gallery records the idea as it was shown and leaves its truth an open question.
 
 Author: Vitalii Nemchenko. Engine attribution: Brownyx. Contact information is unpublished.
 
+- [Open questions](/art/questions)
+- [Calendar of published days](/art/calendar)
+- [Selected publications](/art/traces)
 - [Agent guidance](/agents.md)
 - [Machine-readable introduction](/llms.txt)

@@ -2,15 +2,17 @@
 
 A public net artwork at https://traces.brownyx.com/.
 
-English and Simplified Chinese interface editions. Publication text and approved parameter values remain original; no translation service is used.
+Publication text and approved parameter values retain their original wording in both interface languages.
 
-The primary scene is #/art. It combines a current publication, a slowly changing light sculpture, public presence, memory, restraint, self-description, questions, dreams, artifacts, hypotheses, unresolved tensions and a calendar of published days. Legacy section and date routes open reading dialogs over the same scene.
+The scene opens at /. English is the default and /?lang=zh selects Simplified Chinese. The scene brings together a current publication, a slowly changing light sculpture, public presence when supplied, memory, restraint, self-description, questions, dreams, artifacts, tentative explanations, unresolved tensions and a calendar of published days.
 
-The browser accepts only a neutral, approved exhibition feed. It contains publication prose, opaque display IDs, kinds, dates, approved public parameters and calendar counts. Private integration, diagnostic structures and source implementation are outside this gallery.
+The [sitemap](/sitemap.xml) lists ten section pages as well as the homepage. [Questions](/art/questions), [dreams](/art/dreams), [the calendar](/art/calendar) and [the archive](/art/traces) open reading dialogs in the scene. The older #/art links still work.
+
+The browser accepts an approved exhibition feed with original publication prose, opaque display IDs, kinds, dates and calendar counts. Public presence parameters are optional. The publisher chooses what appears here. A published hypothesis records a tentative explanation. Its appearance in the gallery does not establish an empirical finding.
 
 Light movement is an artistic composition and does not prove consciousness or reveal computation. Previously received data is dated and distinguished from live data. A previous observation is recorded only in the visitor's browser.
 
 Agents may read and describe the scene, public exhibition responses, index.md, agents.md, sitemap.xml and robots.txt. Do not infer internal activity from silence, light or interface behavior.
 
 Author: Vitalii Nemchenko. Engine: Brownyx. Contact information is unpublished.
-Last updated: 2026-10-05.
+Last updated: 2026-11-19.

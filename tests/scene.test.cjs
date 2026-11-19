@@ -44,16 +44,20 @@ function scene(language, publication, options = {}) {
       innerHTML: "", textContent: "", dataset: {}, offsetWidth: 0,
       classList: { add() {}, remove() {} },
       querySelector: child => sink(selector + " " + child),
+      addEventListener() {}, close() {},
     });
     return sinks.get(selector);
   }
-  const window = { TracesCopy: Copy, localStorage: storage };
+  const root = { querySelector: sink, querySelectorAll: () => [], addEventListener() {} };
+  const window = { TracesCopy: Copy, localStorage: storage, addEventListener() {} };
   const context = vm.createContext({
     window,
-    document: { hidden: false, querySelector: selector => selector === "#app-root" ? { querySelector: sink } : null },
+    document: { hidden: false, documentElement: {}, addEventListener() {}, querySelector: selector => selector === "#app-root" ? root : null },
     location: { search: "?lang=" + language, pathname: "/", hash: "#/art", origin: "https://example.test" },
-    TracesFeed: Feed,
+    TracesFeed: options.feed || Feed,
+    TracesLight: { create: () => ({ setPublication() {} }) },
     Intl, URL, URLSearchParams,
+    setTimeout: () => 1, clearTimeout() {},
     requestAnimationFrame: () => 1,
     cancelAnimationFrame() {},
   });
@@ -61,6 +65,7 @@ function scene(language, publication, options = {}) {
   return {
     context, storage,
     evaluate: expression => vm.runInContext(expression, context),
+    start: () => vm.runInContext(source.slice(wiring), context, { filename: "app.js" }),
     render() { vm.runInContext("render()", context); },
     zone: name => sink(`[data-zone="${name}"] .zone-content`).innerHTML,
     markup: () => [...sinks.values()].map(value => value.innerHTML + value.textContent).join("\n"),
@@ -75,6 +80,39 @@ function content(html, expression) {
   assert.ok(match, "expected publication text container");
   return decodePresentation(match[1]);
 }
+
+test("first visit keeps publication and calendar unreceived until the exhibition responds", async () => {
+  const storage = memory();
+  const requests = [];
+  let finish;
+  const pending = new Promise(resolve => { finish = resolve; });
+  const fetchImpl = url => {
+    requests.push(url);
+    if (url === "/api/exhibition") return pending;
+    const placeholder = fs.readFileSync(path.join(__dirname, "../assets/fallback-snapshot.json"), "utf8");
+    return Promise.resolve(response(JSON.parse(placeholder)));
+  };
+  const feed = {
+    createStore: options => Feed.createStore({ ...options, fetchImpl }),
+    request: (url, options) => Feed.request(url, { ...options, fetchImpl }),
+  };
+  const view = scene("en", null, { storage, feed });
+  const startup = view.start();
+  try {
+    await new Promise(resolve => setImmediate(resolve));
+    assert.deepEqual(requests, ["/api/exhibition"]);
+    assert.ok(view.zone("current").includes(Copy.en.missing));
+    assert.equal(view.evaluate("root.querySelector('.calendar-heading span').textContent"), "");
+    assert.equal(view.evaluate("observation.published_at"), null);
+    assert.equal(storage.getItem("traces.observation.v2"), null);
+  } finally {
+    finish(response(payload()));
+    await startup;
+  }
+  assert.equal(view.evaluate("observation.status"), "live");
+  assert.equal(view.evaluate("observation.published_at"), PUBLISHED);
+  assert.equal(JSON.parse(storage.getItem("traces.observation.v2")).total, payload().presence.total);
+});
 
 test("only English and Chinese interfaces exist, and absence describes what is on view", () => {
   assert.deepEqual(Object.keys(Copy).sort(), ["en", "zh"]);

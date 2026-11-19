@@ -15,23 +15,23 @@ node scripts/package.mjs
 node scripts/check-public.mjs
 ```
 
-Open `http://127.0.0.1:4178/?lang=en#/art` or `?lang=zh#/art`. The preview serves an explicit public-file allowlist and returns an unavailable response until an approved exhibition feed is configured. It never serves the repository, ignored files or environment settings.
+Open `http://127.0.0.1:4178/` for the English scene or `http://127.0.0.1:4178/?lang=zh` for Simplified Chinese. The preview serves the gallery files and returns an unavailable response for the feed until an approved exhibition is configured.
 
-`dist/` is the static gallery package. The homepage and stable public sections have separate canonical URLs; `?lang=` changes only the interface and is not a second canonical page. Technical and machine-readable files remain available to their consumers and carry `X-Robots-Tag: noindex`. The package can be served by any static host that honors `_headers`; live data requires a same-origin `/api/exhibition` or a separately configured, already approved exhibition feed with CORS. This repository does not contain the integration with the source system.
+The static package in `dist/` includes the homepage and ten section pages with stable URLs, including `/art/questions`, `/art/calendar` and `/art/traces`. Interface languages share these URLs. Older hash links still open the scene or the requested reading. The sitemap lists the canonical pages. Hosts that honor `_headers` serve the machine-readable documents with `X-Robots-Tag: noindex`.
+
+The browser requests `/api/exhibition` by default. The local preview permits browser requests only to its own origin. A separate static deployment can configure an approved feed on another origin when its content security policy and the feed's CORS settings allow it.
 
 ## Exhibition contract
 
-`public-feed.js` accepts only `traces.exhibition.v1`, with `language: "original"` and:
+`public-feed.js` accepts the `traces.exhibition.v1` contract with `language: "original"`. Each edition carries a publication timestamp, the current publication or an explicit absence, a bounded list of selected publications, and a calendar of dates and publication counts.
 
-- a publication timestamp;
-- the current publication, or an explicit absence;
-- a bounded list of selected publications;
-- public presence parameters;
-- calendar dates and publication counts.
+An edition can also include public presence parameters.
 
 A publication consists of an opaque exhibition ID, a display kind, original prose, optional title/note and a date. Source identifiers and unrecognized nested structures are not part of this contract. The validator drops additional fields, rejects incompatible or unsafe declarations, and bounds dates, numbers, lengths and request duration. Only the projected contract is cached. Older browser caches are not reused.
 
-The source operator prepares and approves this feed **before** it reaches the browser. An optional local preview adapter can be supplied through `ART_BRIDGE_MODULE`; it stays outside Git and the public package. Alternatively set `ART_FEED_URL` to a feed that already implements the exhibition contract. No browser credentials, privileged endpoints or private source code belong here.
+The publisher selects and approves material before it reaches the browser. A published hypothesis presents a tentative explanation in its original words. Its appearance here records what was exhibited. An empirical conclusion would require evidence beyond the exhibition feed.
+
+For the local preview, set `ART_FEED_URL` to an approved feed that already supplies the exhibition contract, or use `ART_BRIDGE_MODULE` for a private adapter. The preview reads either source server-side. The adapter stays outside Git and the public package.
 
 Projection protects the structural boundary. It does not prove that prose is safe to publish: editorial approval and protection of the source system remain the publisher's responsibilities. Merely hiding a field in a page cannot make an existing public endpoint private.
 

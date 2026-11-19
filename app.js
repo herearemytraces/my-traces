@@ -184,7 +184,6 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)clearTimeou
 window.addEventListener('resize',fit);window.addEventListener('online',refresh);window.addEventListener('hashchange',route);window.addEventListener('popstate',route);
 mount();route();
 async function start(){
- if(!observation.feed){try{const feed=await TracesFeed.request('/assets/fallback-snapshot.json',{timeoutMs:8000});observation={feed,status:'cached',received_at:null,published_at:feed.published_at};render();}catch{}}
  await refresh();if(reader && reader!=='day')showReader(reader);
 }
 start();
